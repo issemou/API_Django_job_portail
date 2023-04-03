@@ -13,7 +13,7 @@ from main_app.models import CustomUser, Staff, Job, Applicant, JobType, Category
     WIBAdmin, NotificationAdmin, NotificationStaff, CahierCharge
 
 
-@login_required
+
 @csrf_exempt
 def Staff_apply_job(request, job_id):
     if request.method == 'POST':
@@ -30,7 +30,7 @@ def Staff_apply_job(request, job_id):
         return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def get_all_Applyjob(request):
     if request.method == 'GET':
@@ -87,7 +87,7 @@ def get_all_Applyjob(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 def staff_notify_employer(request):
     employer = CustomUser.objects.filter(user_type=3)
     context = {
@@ -97,7 +97,7 @@ def staff_notify_employer(request):
     return JsonResponse(context, safe=False)
 
 
-@login_required
+
 def staff_notify_admin(request):
     admins = CustomUser.objects.filter(user_type=1)
     context = {
@@ -107,7 +107,7 @@ def staff_notify_admin(request):
     return JsonResponse(context, safe=False)
 
 
-@login_required
+
 @csrf_exempt
 def send_employer_notification(request):
     id = request.POST.get('id')
@@ -123,7 +123,7 @@ def send_employer_notification(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def send_admin_notification(request):
     id = request.POST.get('id')
@@ -151,7 +151,7 @@ def staff_fcmtoken(request):
         return HttpResponse("False")
 
 
-@login_required
+
 def staff_view_notification(request):
     staff = get_object_or_404(Staff, admin=request.user)
     notifications = NotificationStaff.objects.filter(staff=staff)

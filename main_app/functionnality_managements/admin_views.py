@@ -128,7 +128,7 @@ def delete_category(request, category_id):
         return JsonResponse(msg)
 
 
-@login_required
+
 def admin_notify_staff(request):
     if request.method == "GET":
         staff = CustomUser.objects.filter(user_type=2)
@@ -142,7 +142,6 @@ def admin_notify_staff(request):
         return JsonResponse(msg)
 
 
-@login_required
 def admin_notify_employer(request):
     if request.method == 'GET':
         employers = CustomUser.objects.filter(user_type=3)
@@ -156,7 +155,7 @@ def admin_notify_employer(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def send_staff_notification(request):
     if request.method == 'POST':
@@ -176,7 +175,7 @@ def send_staff_notification(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def send_employer_notification(request):
     if request.method == "POST":
@@ -196,7 +195,7 @@ def send_employer_notification(request):
         return JsonResponse(msg)
 
 
-@csrf_exempt
+
 def admin_fcmtoken(request):
     if request.method == "POST":
         token = request.POST.get('token')
@@ -212,7 +211,7 @@ def admin_fcmtoken(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 def admin_view_notification(request):
     if request.method == "GET":
         admin = get_object_or_404(WIBAdmin, admin=request.user)
@@ -227,7 +226,7 @@ def admin_view_notification(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 def all_applicants(request):
     if request.method == 'GET':
         applicant_list = Applicant.objects.all()
@@ -283,7 +282,7 @@ def all_applicants(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 def get_applicant_by_id(request, applicant_id):
     if request.method == 'GET':
         applicant = Applicant.objects.get(id=applicant_id)
@@ -334,7 +333,7 @@ def get_applicant_by_id(request, applicant_id):
         return JsonResponse(msg)
 
 
-@login_required
+
 def get_all_employer(request, applicant_id):
     if request.method == 'GET':
         employers = Employer.objects.all()

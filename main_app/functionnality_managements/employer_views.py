@@ -113,7 +113,7 @@ def delete_job(request, job_id):
         return JsonResponse(msg)
 
 
-@login_required
+
 def employer_notify_staff(request):
     staff = CustomUser.objects.filter(user_type=2)
     context = {
@@ -123,7 +123,7 @@ def employer_notify_staff(request):
     return JsonResponse(context, safe=False)
 
 
-@login_required
+
 def employer_notify_admin(request):
     admins = CustomUser.objects.filter(user_type=1)
     context = {
@@ -133,7 +133,7 @@ def employer_notify_admin(request):
     return JsonResponse(context, safe=False)
 
 
-@login_required
+
 @csrf_exempt
 def send_staff_notification(request):
     id = request.POST.get('id')
@@ -149,7 +149,7 @@ def send_staff_notification(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def send_admin_notification(request):
     id = request.POST.get('id')
@@ -177,7 +177,7 @@ def employer_fcmtoken(request):
         return HttpResponse("False")
 
 
-@login_required
+
 def employer_view_notification(request):
     employer = get_object_or_404(Employer, admin=request.user)
     notifications = NotificationEmployer.objects.filter(employer=employer)
@@ -188,7 +188,6 @@ def employer_view_notification(request):
     return JsonResponse(context, safe=False)
 
 
-@login_required
 @csrf_exempt
 def get_all_jobs(request):
     emp = Employer.objects.get(admin_id=request.user.id)
