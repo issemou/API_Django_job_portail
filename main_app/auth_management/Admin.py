@@ -56,7 +56,7 @@ def wib_registration(request):
         return JsonResponse(fp)
 
 
-@login_required
+
 @csrf_exempt
 def admin_edite_profile(request):
     if request.method == 'POST':
@@ -120,7 +120,6 @@ def admin_edite_profile(request):
         return JsonResponse(fp)
 
 
-@login_required
 @csrf_exempt
 def admin_view_profile(request):
     if request.method == 'GET':

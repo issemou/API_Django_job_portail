@@ -13,7 +13,7 @@ from main_app.models import CustomUser, Staff, NotificationStaff, WIBAdmin, Noti
 from main_app.models import JobType, Category, Job, Employer
 
 
-@login_required
+
 @csrf_exempt
 def add_job(request):
     if request.method == 'POST':
@@ -56,7 +56,6 @@ def add_job(request):
         return JsonResponse(msg)
 
 
-@login_required
 @csrf_exempt
 def edite_job(request, job_id):
     if request.method == 'POST':
@@ -101,7 +100,7 @@ def edite_job(request, job_id):
         return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def delete_job(request, job_id):
     if request.method == 'DELETE':

@@ -20,7 +20,6 @@ def Satff_registration(request):
         password = request.POST.get('password')
         profile = request.FILES.get('profile_pic')
         gender = request.POST.get('gender')
-
         if check_email_exist(email):
             fp = getMessage("Email Already Exists", 500)
             return JsonResponse(fp)
@@ -56,7 +55,6 @@ def Satff_registration(request):
         return JsonResponse(fp)
 
 
-@login_required
 @csrf_exempt
 def staff_edite_profile(request):
     if request.method == 'POST':
@@ -119,7 +117,7 @@ def staff_edite_profile(request):
         return JsonResponse(fp)
 
 
-@login_required
+
 @csrf_exempt
 def staff_view_profile(request):
     if request.method == 'GET':

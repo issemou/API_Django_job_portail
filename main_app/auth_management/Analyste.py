@@ -56,7 +56,7 @@ def analyste_registration(request):
         return JsonResponse(fp)
 
 
-@login_required
+
 @csrf_exempt
 def analyste_edite_profile(request):
     if request.method == 'POST':
@@ -120,7 +120,7 @@ def analyste_edite_profile(request):
         return JsonResponse(fp)
 
 
-@login_required
+
 @csrf_exempt
 def analyste_view_profile(request):
     if request.method == 'GET':

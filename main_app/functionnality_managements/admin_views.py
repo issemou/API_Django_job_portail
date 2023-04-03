@@ -10,7 +10,7 @@ from main_app.models import CustomUser, JobType, Category, WIBAdmin, Applicant, 
     NotificationEmployer, NotificationAdmin, Job
 
 
-@login_required
+
 @csrf_exempt
 def add_type_job(request):
     if request.method == 'POST':
@@ -30,7 +30,7 @@ def add_type_job(request):
             return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def edite_type_job(request, type_job_id):
     if request.method == 'POST':
@@ -50,7 +50,7 @@ def edite_type_job(request, type_job_id):
             return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def delete_type_job(request, type_job_id):
     if request.method == 'DELETE':
@@ -65,7 +65,7 @@ def delete_type_job(request, type_job_id):
             return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def add_category(request):
     if request.method == 'POST':
@@ -87,7 +87,7 @@ def add_category(request):
             return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def edite_category(request, category_id):
     if request.method == 'POST':
@@ -111,8 +111,6 @@ def edite_category(request, category_id):
         msg = getMessage("Bad request", 500)
         return JsonResponse(msg)
 
-
-@login_required
 @csrf_exempt
 def delete_category(request, category_id):
     if request.method == 'DELETE':

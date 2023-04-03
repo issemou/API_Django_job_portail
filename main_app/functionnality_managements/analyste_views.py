@@ -10,7 +10,7 @@ from main_app.helpers.commonts import getMessage
 from main_app.models import Job, CahierCharge, Analyste
 
 
-@login_required
+
 @csrf_exempt
 def validate_book_job(request, job_id):
     if request.method == 'POST':

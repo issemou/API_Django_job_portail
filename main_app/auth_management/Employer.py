@@ -60,7 +60,7 @@ def employer_registration(request):
         return JsonResponse(fp)
 
 
-@login_required
+
 @csrf_exempt
 def employer_view_profile(request):
     if request.method == 'GET':
@@ -87,7 +87,7 @@ def employer_view_profile(request):
         return JsonResponse(msg)
 
 
-@login_required
+
 @csrf_exempt
 def employer_edite_profile(request):
     if request.method == 'POST':
