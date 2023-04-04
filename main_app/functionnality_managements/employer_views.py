@@ -26,7 +26,11 @@ def add_job(request):
             livrable_date = request.POST.get('livrable_date')
             upload = request.FILES.get('cahier_upload')
 
-            emp = Employer.objects.get(admin_id=request.user.id)
+            # emp = Employer.objects.get(admin_id=request.user.id)
+
+            user_id = request.POST.get('user_id')
+            emp = get_object_or_404(Employer, admin_id=user_id)
+
             type_job = JobType.objects.get(id=type_job_id)
             category = Category.objects.get(id=category_id)
 
@@ -68,7 +72,11 @@ def edite_job(request, job_id):
             livrable_date = request.POST.get('livrable_date')
             upload = request.FILES.get('cahier_upload')
 
-            emp = Employer.objects.get(admin_id=request.user.id)
+            # emp = Employer.objects.get(admin_id=request.user.id)
+
+            user_id = request.POST.get('user_id')
+            emp = get_object_or_404(Employer, admin_id=user_id)
+
             type_job = JobType.objects.get(id=type_job_id)
             category = Category.objects.get(id=category_id)
 
@@ -136,7 +144,7 @@ def employer_notify_admin(request):
 
 @csrf_exempt
 def send_staff_notification(request):
-    id = request.POST.get('id')
+    id = request.POST.get('staff_id')
     message = request.POST.get('message')
     staff = get_object_or_404(Staff, admin_id=id)
     try:
@@ -152,7 +160,7 @@ def send_staff_notification(request):
 
 @csrf_exempt
 def send_admin_notification(request):
-    id = request.POST.get('id')
+    id = request.POST.get('admin_id')
     message = request.POST.get('message')
     admin = get_object_or_404(WIBAdmin, admin_id=id)
     try:
@@ -179,7 +187,12 @@ def employer_fcmtoken(request):
 
 
 def employer_view_notification(request):
-    employer = get_object_or_404(Employer, admin=request.user)
+
+    # employer = get_object_or_404(Employer, admin=request.user)
+
+    user_id = request.POST.get('user_id')
+    employer = get_object_or_404(Employer, admin_id=user_id)
+
     notifications = NotificationEmployer.objects.filter(employer=employer)
     context = {
         'notifications': notifications,
@@ -190,7 +203,11 @@ def employer_view_notification(request):
 
 @csrf_exempt
 def get_all_jobs(request):
-    emp = Employer.objects.get(admin_id=request.user.id)
+    # emp = Employer.objects.get(admin_id=request.user.id)
+
+    user_id = request.GET.get('user_id')
+    emp = get_object_or_404(Employer, admin_id=user_id)
+
     job_list = Job.objects.filter(employer=emp)
     total_job = job_list.count()
     total_job_finished = job_list.filter(filled=True).count()

@@ -56,11 +56,13 @@ def analyste_registration(request):
         return JsonResponse(fp)
 
 
-
 @csrf_exempt
 def analyste_edite_profile(request):
     if request.method == 'POST':
-        admin = get_object_or_404(Analyste, admin_id=request.user.id)
+        # admin = get_object_or_404(Analyste, admin_id=request.user.id)
+
+        user_id = request.POST.get('user_id')
+        admin = get_object_or_404(Analyste, admin_id=user_id)
 
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -120,11 +122,14 @@ def analyste_edite_profile(request):
         return JsonResponse(fp)
 
 
-
 @csrf_exempt
 def analyste_view_profile(request):
     if request.method == 'GET':
-        admin = CustomUser.objects.get(id=request.user.id)
+        # admin = CustomUser.objects.get(id=request.user.id)
+
+        user_id = request.GET.get('user_id')
+        admin = get_object_or_404(Analyste, admin_id=user_id)
+
         fs = FileSystemStorage()
         profile_url = fs.url(admin.profile_pic)
         data = {

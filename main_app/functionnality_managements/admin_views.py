@@ -15,7 +15,10 @@ from main_app.models import CustomUser, JobType, Category, WIBAdmin, Applicant, 
 def add_type_job(request):
     if request.method == 'POST':
         try:
-            admin = WIBAdmin.objects.get(admin_id=request.user.id)
+            # admin = WIBAdmin.objects.get(admin_id=request.user.id)
+
+            user_id = request.POST.get('user_id')
+            admin = get_object_or_404(WIBAdmin, admin_id=user_id)
 
             label = request.POST.get('label')
             type_job = JobType()
@@ -35,7 +38,11 @@ def add_type_job(request):
 def edite_type_job(request, type_job_id):
     if request.method == 'POST':
         try:
-            admin = WIBAdmin.objects.get(admin_id=request.user.id)
+            # admin = WIBAdmin.objects.get(admin_id=request.user.id)
+
+            user_id = request.POST.get('user_id')
+            admin = get_object_or_404(WIBAdmin, admin_id=user_id)
+
             label = request.POST.get('label')
 
             type_job = JobType.objects.get(id=type_job_id)
@@ -70,7 +77,11 @@ def delete_type_job(request, type_job_id):
 def add_category(request):
     if request.method == 'POST':
         try:
-            admin = WIBAdmin.objects.get(admin_id=request.user.id)
+            # admin = WIBAdmin.objects.get(admin_id=request.user.id)
+
+
+            user_id = request.POST.get('user_id')
+            admin = get_object_or_404(WIBAdmin, admin_id=user_id)
 
             title = request.POST.get('title')
             description = request.POST.get('description')
@@ -92,8 +103,12 @@ def add_category(request):
 def edite_category(request, category_id):
     if request.method == 'POST':
         try:
-            admin = WIBAdmin.objects.get(admin_id=request.user.id)
-            title = request.PUT.get('title')
+            # admin = WIBAdmin.objects.get(admin_id=request.user.id)
+
+            user_id = request.POST.get('user_id')
+            admin = get_object_or_404(WIBAdmin, admin_id=user_id)
+
+            title = request.POST.get('title')
             description = request.POST.get('description')
 
             cat = Category.objects.get(id=category_id)
@@ -159,9 +174,9 @@ def admin_notify_employer(request):
 @csrf_exempt
 def send_staff_notification(request):
     if request.method == 'POST':
-        id = request.POST.get('id')
+        id_staff = request.POST.get('staff_id')
         message = request.POST.get('message')
-        staff = get_object_or_404(Staff, admin_id=id)
+        staff = get_object_or_404(Staff, admin_id=id_staff)
         try:
             notification = NotificationStaff(staff=staff, message=message)
             notification.save()
@@ -179,9 +194,9 @@ def send_staff_notification(request):
 @csrf_exempt
 def send_employer_notification(request):
     if request.method == "POST":
-        id = request.POST.get('id')
+        id_employer = request.POST.get('employer_id')
         message = request.POST.get('message')
-        employer = get_object_or_404(Employer, admin_id=id)
+        employer = get_object_or_404(Employer, admin_id=id_employer)
         try:
             notification = NotificationEmployer(employer=employer, message=message)
             notification.save()
@@ -200,7 +215,10 @@ def admin_fcmtoken(request):
     if request.method == "POST":
         token = request.POST.get('token')
         try:
-            admin_user = get_object_or_404(CustomUser, id=request.user.id)
+            # admin_user = get_object_or_404(CustomUser, id=request.user.id)
+
+            user_id = request.POST.get('user_id')
+            admin_user = get_object_or_404(WIBAdmin, admin_id=user_id)
             admin_user.fcm_token = token
             admin_user.save()
             return HttpResponse("True")
@@ -214,7 +232,9 @@ def admin_fcmtoken(request):
 
 def admin_view_notification(request):
     if request.method == "GET":
-        admin = get_object_or_404(WIBAdmin, admin=request.user)
+        user_id = request.GET.get('user_id')
+        admin = get_object_or_404(WIBAdmin, admin_id=user_id)
+        # admin = get_object_or_404(WIBAdmin, admin=request.user)
         notifications = NotificationAdmin.objects.filter(admin=admin)
         context = {
             'notifications': notifications,

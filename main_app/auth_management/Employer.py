@@ -64,7 +64,11 @@ def employer_registration(request):
 @csrf_exempt
 def employer_view_profile(request):
     if request.method == 'GET':
-        admin = CustomUser.objects.get(id=request.user.id)
+        # admin = CustomUser.objects.get(id=request.user.id)
+
+        user_id = request.POST.get('user_id')
+        admin = get_object_or_404(Employer, admin_id=user_id)
+
         fs = FileSystemStorage()
         profile_url = fs.url(admin.profile_pic)
         data = {
@@ -91,7 +95,10 @@ def employer_view_profile(request):
 @csrf_exempt
 def employer_edite_profile(request):
     if request.method == 'POST':
-        employer = get_object_or_404(Employer, admin_id=request.user.id)
+        # employer = get_object_or_404(Employer, admin_id=request.user.id)
+
+        user_id = request.POST.get('user_id')
+        employer = get_object_or_404(Employer, admin_id=user_id)
 
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last')

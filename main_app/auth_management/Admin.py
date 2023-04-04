@@ -60,7 +60,7 @@ def wib_registration(request):
 @csrf_exempt
 def admin_edite_profile(request):
     if request.method == 'POST':
-        admin = get_object_or_404(WIBAdmin, admin_id=request.user.id)
+        # admin = get_object_or_404(WIBAdmin, admin_id=request.user.id)
 
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -69,6 +69,8 @@ def admin_edite_profile(request):
         password = request.POST.get('password')
         gender = request.POST.get('gender')
         profile = request.FILES.get('profile_pic')
+        user_id = request.POST.get('user_id')
+        admin = get_object_or_404(WIBAdmin, admin_id=user_id)
 
         try:
             cust = CustomUser.objects.get(id=admin.admin.id)
@@ -123,7 +125,8 @@ def admin_edite_profile(request):
 @csrf_exempt
 def admin_view_profile(request):
     if request.method == 'GET':
-        admin = CustomUser.objects.get(id=request.user.id)
+        user_id = request.GET.get('user_id')
+        admin = CustomUser.objects.get(id=user_id)
         fs = FileSystemStorage()
         profile_url = fs.url(admin.profile_pic)
         data = {

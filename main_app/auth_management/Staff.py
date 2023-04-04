@@ -58,7 +58,11 @@ def Satff_registration(request):
 @csrf_exempt
 def staff_edite_profile(request):
     if request.method == 'POST':
-        staff = get_object_or_404(Staff, admin_id=request.user.id)
+        # staff = get_object_or_404(Staff, admin_id=request.user.id)
+
+        user_id = request.POST.get('user_id')
+        staff = get_object_or_404(Staff, admin_id=user_id)
+
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         address = request.POST.get('address')
@@ -121,7 +125,11 @@ def staff_edite_profile(request):
 @csrf_exempt
 def staff_view_profile(request):
     if request.method == 'GET':
-        admin = CustomUser.objects.get(id=request.user.id)
+        # admin = CustomUser.objects.get(id=request.user.id)
+
+        user_id = request.GET.get('user_id')
+        admin = get_object_or_404(Staff, admin_id=user_id)
+
         fs = FileSystemStorage()
         profile_url = fs.url(admin.profile_pic)
         data = {

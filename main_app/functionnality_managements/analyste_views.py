@@ -22,7 +22,11 @@ def validate_book_job(request, job_id):
 
             job = get_object_or_404(Job, id=job_id)
             cahier = CahierCharge.objects.get(job=job)
-            analyste = Analyste.objects.get(admin_id=request.user.id)
+
+            # analyste = Analyste.objects.get(admin_id=request.user.id)
+
+            user_id = request.POST.get('user_id')
+            analyste = get_object_or_404(Analyste, admin_id=user_id)
 
             if upload is not None:
                 cahier.upload = upload
@@ -37,6 +41,7 @@ def validate_book_job(request, job_id):
                 send_mail(
                     'Validation Fonctionnality Book',
                     f"votre job a bien ete approuver et mis en ligne http://localhost:8000{cahier_url}",
+                    analyste.admin.email,
                     ['ridovicisseou@gmail.com', 'sandseller10@gmail.com'],
                     fail_silently=False
                 )
@@ -46,6 +51,7 @@ def validate_book_job(request, job_id):
                 send_mail(
                     'Validation Fonctionnality Book',
                     "votre job n'a pas pu etre poster suite a la non-validation de votre cahier",
+                    analyste.admin.email,
                     ['ridovicisseou@gmail.com', 'sandseller10@gmail.com'],
                     fail_silently=False
                 )

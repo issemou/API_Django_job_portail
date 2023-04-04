@@ -17,7 +17,10 @@ from main_app.models import CustomUser, Staff, Job, Applicant, JobType, Category
 @csrf_exempt
 def Staff_apply_job(request, job_id):
     if request.method == 'POST':
-        staff = Staff.objects.get(admin_id=request.user.id)
+        # staff = Staff.objects.get(admin_id=request.user.id)
+
+        user_id = request.POST.get('user_id')
+        staff = get_object_or_404(Staff, admin_id=user_id)
         job = Job.objects.get(id=job_id)
         applicant = Applicant()
         applicant.staff = staff
@@ -34,7 +37,11 @@ def Staff_apply_job(request, job_id):
 @csrf_exempt
 def get_all_Applyjob(request):
     if request.method == 'GET':
-        staff = Staff.objects.get(admin_id=request.user.id)
+        # staff = Staff.objects.get(admin_id=request.user.id)
+
+        user_id = request.GET.get('user_id')
+        staff = get_object_or_404(Staff, admin_id=user_id)
+
         apply_list = Applicant.objects.filter(staff=staff)
         total_apply = apply_list.count()
         total_job_finish = 0
@@ -110,7 +117,7 @@ def staff_notify_admin(request):
 
 @csrf_exempt
 def send_employer_notification(request):
-    id = request.POST.get('id')
+    id = request.POST.get('employer_id')
     message = request.POST.get('message')
     employer = get_object_or_404(Employer, admin_id=id)
     try:
@@ -126,7 +133,7 @@ def send_employer_notification(request):
 
 @csrf_exempt
 def send_admin_notification(request):
-    id = request.POST.get('id')
+    id = request.POST.get('admin_id')
     message = request.POST.get('message')
     admin = get_object_or_404(WIBAdmin, admin_id=id)
     try:
@@ -153,7 +160,12 @@ def staff_fcmtoken(request):
 
 
 def staff_view_notification(request):
-    staff = get_object_or_404(Staff, admin=request.user)
+
+    # staff = get_object_or_404(Staff, admin=request.user)
+
+    user_id = request.GET.get('user_id')
+    staff = get_object_or_404(Staff, admin_id=user_id)
+
     notifications = NotificationStaff.objects.filter(staff=staff)
     context = {
         'notifications': notifications,
